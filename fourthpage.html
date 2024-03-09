@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculator</title>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+  <!-- Bootstrap JavaScript (optional) -->
+  <!-- Required dependencies -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="container">
+    <div class="row">
+      <div class="col">
+        <div class="p-4 mb-2 bg-dark text-light">
+
+<h1 style="text-align: center;">Calculator</h1>
+<br>
+<body>
+    
+<div class="wrapper">
+
+    <section class="screen" id="screen" style="display: flex;
+    align-items: center; justify-content: center">
+        0
+    </section>
+    <section class="calc-buttons">
+        <div class="calc-button-row" style="display: flex;
+    align-items: center; justify-content: center">
+
+            <button class="calc-button double" onclick="clearFunc()">
+                C
+            </button>
+            <button class="calc-button back" onclick="removeNumberFunc()">
+                &larr;
+            </button>
+            <button class="calc-button division" onclick="screenFunc('/')">
+                &divide;
+            </button>
+        </div>
+
+        <div class="calc-button-row" style="display: flex;
+    align-items: center; justify-content: center">
+            <button class="calc-button seven" onclick="screenFunc('7')">
+                7
+            </button>
+            <button class="calc-button eight" onclick="screenFunc('8')">
+                8
+            </button>
+            <button class="calc-button nine" onclick="screenFunc('9')">
+                9
+            </button>
+            <button class="calc-button multiply" onclick="screenFunc('*')">
+                &times;
+            </button>
+        </div>
+
+        <div class="calc-button-row" style="display: flex;
+    align-items: center; justify-content: center">
+            <button class="calc-button four" onclick="screenFunc('4')">
+                4
+            </button>
+            <button class="calc-button five" onclick="screenFunc('5')">
+                5
+            </button>
+            <button class="calc-button six" onclick="screenFunc('6')">
+                6
+            </button>
+            <button class="calc-button minus" onclick="screenFunc('-')">
+                &minus;
+            </button>
+        </div>
+
+        <div class="calc-button-row" style="display: flex;
+    align-items: center; justify-content: center">
+            <button class="calc-button one" onclick="screenFunc('1')">
+                1
+            </button>
+            <button class="calc-button two" onclick=" screenFunc('2')">
+                2
+            </button>
+            <button class="calc-button three" onclick="screenFunc('3')">
+                3
+            </button>
+            <button class="calc-button plus" onclick="screenFunc('+')">
+                &plus;
+            </button>
+        </div>
+
+        <div class="calc-button-row triple" style="display: flex;
+    align-items: center; justify-content: center">
+            <button class="calc-button zero" onclick="screenFunc('0')">
+                0
+            </button>
+            <button class="calc-button equals" onclick="calkFunk()">
+                &equals;
+            </button>
+        </div>
+
+
+    </section>
+<br>
+    <section class="results-screen" id="results-screen" style="display: flex;
+    align-items: center; justify-content: center">
+        results:
+    </section>
+    <br>
+    <button type="button" onclick="clearResultsArr()" >clear results</button>
+    <br>
+
+</div>
+<!-- This script tag connects a JavaScript file named "calc.js" to make sure once opened in browser it contains JavaScript part of the calculator -->
+<script>
+    
+
+// This line selects the HTML element with the class 'screen' and saves it into 
+//a variable called 'screen'. Word 'let' is used to declare a variable
+let screen = document.querySelector('.screen');
+
+// This line selects the HTML element with the class 'results-screen' and assigns
+// it to the variable 'resultsScreen'
+let resultsScreen = document.querySelector('.results-screen');
+
+//Empty square brackets represent an empty array so the calculator starts with no previous calculation history
+let resultsArr = [];
+
+//This variable holds content displayed on the calculator screen. 
+//By setting it as an empty string "", the calculator starts with no content displayed
+let displayStr = "";
+
+//This defines a function called screenFunc. It's responsible for deciding what shows on the calculator's display.
+// 'symb'  is what the function uses to know what to show on the screen
+function screenFunc(symb) {
+
+
+// If the length of the content displayed on the calculator screen is 19
+// or more characters the function immediately stops 
+    if (displayStr.length >= 19) {
+        return;
+    }
+
+// This function shows if a given symbol is a plus, minus, multiply, or divide sign
+// if the symbol is like any of these signs, it says true. Otherwise, it says false
+    function isOperation(char) {
+        if (char === '+') {
+            return true;
+        } else if (char === '-') {
+            return true;
+        } else if (char === '*') {
+            return true;
+        } else if (char === '/') {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+// The hasNumbers function checks if a given character is a number from 0 to 9
+//if the character matches any of these numbers, it returns true; otherwise, it returns false
+    function hasNumbers(char) {
+        return char === '0' || char === '1'
+            || char === '2' || char === '3'
+            || char === '4' || char === '5'
+            || char === '6' || char === '7'
+            || char === '8' || char === '9';
+
+    }
+
+//This code manages what's displayed on the calculator screen based on the button pressed.
+//It checks if the screen is empty or if the last character is '-', and handles different scenarios accordingly.
+//it also updates the calculator screen with the modified content
+    const lastChar = displayStr.slice(-1);
+    console.log(lastChar);
+
+    if (displayStr.length === 0 && symb !== '-' && !isOperation(symb)) {
+        displayStr += symb;
+    } else if (displayStr.length === 0 && symb === '-') {
+        displayStr += symb;
+    }
+    else if ((displayStr.length === 0 || (displayStr.length === 1 && lastChar === '-')) && !hasNumbers(symb) ) {
+        return;
+    }
+    else if (isOperation(lastChar) && isOperation(symb)) {
+        displayStr = displayStr.slice(0, -1) + symb;
+    } else {
+        displayStr += symb;
+    }
+
+    screen.innerText = displayStr;
+}
+
+
+//This function calculate whats on the screen and shows the result.
+//The eval() function is used to do the calculation. After calculating, it updates what's on the calculator screen with the result.
+//It also keeps track of all the previous results. Each time you calculate something, it adds the result to a list and displays 
+//all the previous results on the screen
+function calkFunk() {
+    displayStr = eval(displayStr);
+    displayStr = displayStr.toString();
+
+    resultsArr.push(displayStr);
+    resultsScreen.innerText = "results: " + resultsArr.toString();
+
+    screen.innerText = displayStr;
+    console.log(displayStr);
+}
+
+// This function clears the calculator screen and updates the calculator screen to show nothing
+function clearFunc() {
+    displayStr = "";
+    screen.innerText = displayStr;
+}
+
+
+// This function removes the last digit from what's shown on the calculator screen, then
+// updates the calculator screen to show the modified display string without the last digit
+function removeNumberFunc() {
+    displayStr = displayStr.substring(0, displayStr.length - 1);
+    screen.innerText = displayStr;
+}
+
+
+// This function clears all previous calculation results and updatse the results screen to show that there are no results
+function clearResultsArr() {
+    resultsArr.splice(0, resultsArr.length);
+    resultsScreen.innerText = "results: " + resultsArr.toString();
+}
+
+</script>
+
+
+
+<div class="navbar">
+
+ <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-bottom">
+  <div class="container-fluid">
+
+    <a class="navbar-brand" href="index.html"><i class="fas fa-home"> </i></a>
+    <a class="navbar-brand" href="secondpage.html" target="_blank"><i class="fa fa-fw fa-coins"></i></a>
+    <a class="navbar-brand" href="thirdpage.html" target="_blank"><i class="fa fa-fw fa-dice"> </i></a>
+    <a class="navbar-brand" href="fourthpage.html" target="_blank"> <i class="fa fa-fw fa-calculator"></i></a>
+
+ 
+</nav>
+</div>
+</body>
+</html>
